@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!--  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+    <!-- CSS START -->
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+	<!-- CSS END -->
+    <head>
+
+        <body>
+
+            <h1>Playing With APIs</h1>
+			<!-- TABLE STARTS -->
+            <table id="myTable">
+                <!-- TABLE ROW FOR HEADINGS -->
+                <tr> 
+                    <th>Train Name</th>
+                    <th>Train Time</th>
+                </tr>
+				<!-- TABLE ROW FOR HEADINGS -->
+
+				<!-- TABLE ROW FOR NAME -->
+                <tr>
+                </tr>
+                <!-- TABLE ROW FOR TIMINGS -->
+                <tr>
+                </tr>
+            </table>
+            <!-- TABLE ENDS -->
+            <br>
+
+        </body>
+
+        <script>
+            $(document).ready(function() {
+                var temp;
+
+                $.ajax({
+                    type: "GET",
+                    url: 'https://api.departureboard.io/api/v2.0/getDeparturesByCRS/EPS/?apiKey=fd535364-a627-4179-870f-11f60985a0b3',
+                    dataType: 'json',
+                    success: function(msg) {
+                        console.log(msg)
+                        temp = msg.trainServices
+                        temp.forEach(function(item) {
+                            var table = document.getElementById("myTable");
+                            var row = table.insertRow(-1);
+                            var cell1 = row.insertCell(-1);
+                            var cell2 = row.insertCell(1);
+                            cell1.innerHTML = item.operator;
+                            cell2.innerHTML = item.std;
+
+                        });
+                    },
+                    error: function(errormessage) {
+                        console.log(errormessage)
+                    }
+                });
+
+            });
+        </script>
+
+</html>
